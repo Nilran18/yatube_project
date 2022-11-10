@@ -2,18 +2,44 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <title>{{ title }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'img/fav/favicon.ico' %}" type="image">
+    <link rel="apple-touch-icon" sizes="180x180"
+          href="{% static 'img/fav/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="{% static 'img/fav/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16"
+          href="{% static 'img/fav/favicon-16x16.png' %}">
+    <meta name="msapplication-TileColor" content="#000">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Подключен файл со стандартными стилями бустрап -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   </head>
+  {% block title %}
+  {% endblock %}
   <body>
     <header>
       {% include 'includes/header.html' %}
     </header>
     <main>
       {% block content %}
-        ;dfknbe'rlk
+      {% for post in posts %}
+      <ul>
+        <li>
+          Автор: {{ post.author.get_full_name }}
+        </li>
+        <li>
+          Дата публикации: {{ post.pub_date|date:"d E Y" }}
+        </li>
+      </ul>
+      <p>{{ post.text }}</p>    
+      <a href="">все записи группы</a>
+      {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %} 
       {% endblock %}
     </main>
-    <footer>
+    <footer class="border-top text-center py-3">
       {% include 'includes/footer.html' %}
     </footer>
   </body>
